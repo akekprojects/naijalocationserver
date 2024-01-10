@@ -1457,3 +1457,40 @@ func getFromEndpoint() interface{} {
 ]
 }
 ```
+
+
+## 🤝 Contributing
+
+### Clone the repo
+
+```bash
+git clone https://github.com/muhammadolammi/naijalocationserver
+cd naijalocationserver
+```
+
+### Build and Run the project
+
+```bash
+go build -o naijalocationserver && ./naijalocationserver
+```
+
+
+
+### Run the tests
+
+```bash
+go test ./...
+```
+
+### Check Secuirity Issues
+```
+staticcheck ./...
+```
+Note:I have staticcheck installed, Check for installation and use guide here https://github.com/dominikh/go-tools
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
+### Add Suggestion
+I believe there is still a lot of functionalities to add.
+* Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug.
