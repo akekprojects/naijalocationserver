@@ -19,3 +19,38 @@ The development of NaijaLocationSever is guided by four key principles:
 Navigate to http://naijalocationserver.com/api/states to access a list of all Nigerian states and their capitals in "application/json" format.
 
 
+## Examples
+### Note: All my examples will be in Golang, You can use any http Client From any Language
+* Get All States in Nigeria
+
+```
+func getFromEndpoint() interface{} {
+	httpClient := http.Client{
+		Timeout: time.Second * 10, // Maximum of 10 secs
+
+	}
+	resp, err := httpClient.Get(" http://naijalocationserver.com/api/states")
+	if err != nil {
+		log.Printf("error getting resp from endpoint: %v", err)
+		return "error getting resp from endpoint"
+	}
+
+	defer resp.Body.Close()
+	decoder := json.NewDecoder(resp.Body)
+
+	var bodyData interface{}
+	//this is a bad practice, you should create a struct for body data to be marshalled into that correlate with the json data from endpoint. To manage type better.
+	err = decoder.Decode(&bodyData)
+	if err != nil {
+		log.Printf("error creating decoder from resp.Body(): %v", err)
+		return "error creating decoder from resp.Body()"
+	}
+
+	return bodyData
+
+}
+
+```
+### The code here will return the following json
+```
+```
