@@ -1404,7 +1404,7 @@ func getFromEndpoint() interface{} {
 
 
 
-* Get All Lgas For State (eg k, ka , kwa) endpoint : "http://naijalocationserver.com/api/local-government-area/{state}"
+* Get All Lgas For State (eg k, ka , kwa) endpoint : "http://naijalocationserver.com/api/local-government-areas/{state}"
 
 ```
 func getFromEndpoint() interface{} {
@@ -1412,7 +1412,7 @@ func getFromEndpoint() interface{} {
 		Timeout: time.Second * 10, // Maximum of 10 secs
 
 	}
-	resp, err := httpClient.Get("http://naijalocationserver.com/api/local-government-area/kwara")
+	resp, err := httpClient.Get("http://naijalocationserver.com/api/local-government-areas/kwara")
 	if err != nil {
 		log.Printf("error getting resp from endpoint: %v", err)
 		return "error getting resp from endpoint"
@@ -1435,3 +1435,25 @@ func getFromEndpoint() interface{} {
 
 ```
 ### The code here will return the following json
+
+```
+{
+"Kwara": [
+"Asa",
+"Baruten",
+"Edu",
+"Ekiti",
+"Ifelodun",
+"Ilorin East",
+"Ilorin West",
+"Irepodun",
+"Isin",
+"Kaiama",
+"Moro",
+"Offa",
+"Oke-Ero",
+"Oyun",
+"Pategi"
+]
+}
+```
