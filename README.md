@@ -1486,7 +1486,7 @@ go test ./...
 ```
 staticcheck ./...
 ```
-Note:I have staticcheck installed, Check for installation and use guide here https://github.com/dominikh/go-tools
+Note: I have staticcheck installed, Check for installation and use guide here https://github.com/dominikh/go-tools
 
 ### Submit a pull request
 
