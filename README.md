@@ -14,3 +14,8 @@ The development of NaijaLocationSever is guided by four key principles:
 
 * Performance: Being a Go application, I chose this language for its exceptional performance and speed. If you grasp concepts like memory management and concurrency, you'll appreciate the efficiency of this server.
 
+## 🚀 Quick Start
+
+Navigate to http://naijalocationserver.com/api/states to access a list of all Nigerian states and their capitals in "application/json" format.
+
+
