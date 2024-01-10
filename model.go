@@ -21,11 +21,7 @@ func databaseStateToState(dbState database.State) State {
 func databaseStatesToStates(dbStates []database.State) []State {
 	states := []State{}
 	for _, st := range dbStates {
-		states = append(states, State{
-			ID:      st.ID,
-			Name:    st.Name,
-			Capital: st.Capital,
-		})
+		states = append(states, databaseStateToState(st))
 	}
 	return states
 }
@@ -46,12 +42,8 @@ func databaseLgaToLga(dbLga database.Lga) Lga {
 }
 func databaseLgasToLgas(dbLgas []database.Lga) []Lga {
 	lgas := []Lga{}
-	for _, st := range dbLgas {
-		lgas = append(lgas, Lga{
-			ID:      st.ID,
-			Name:    st.Name,
-			StateId: st.StateID,
-		})
+	for _, dbLga := range dbLgas {
+		lgas = append(lgas, databaseLgaToLga(dbLga))
 	}
 	return lgas
 }
