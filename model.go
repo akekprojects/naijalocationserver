@@ -30,4 +30,28 @@ func databaseStatesToStates(dbStates []database.State) []State {
 	return states
 }
 
-//Lga
+// Lga
+type Lga struct {
+	ID      uuid.UUID `json:"id"`
+	Name    string    `json:"name"`
+	StateId uuid.UUID `json:"state_id"`
+}
+
+func databaseLgaToLga(dbLga database.Lga) Lga {
+	return Lga{
+		ID:      dbLga.ID,
+		Name:    dbLga.Name,
+		StateId: dbLga.StateID,
+	}
+}
+func databaseLgasToLgas(dbLgas []database.Lga) []Lga {
+	lgas := []Lga{}
+	for _, st := range dbLgas {
+		lgas = append(lgas, Lga{
+			ID:      st.ID,
+			Name:    st.Name,
+			StateId: st.StateID,
+		})
+	}
+	return lgas
+}

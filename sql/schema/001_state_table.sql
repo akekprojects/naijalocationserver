@@ -10,7 +10,7 @@ CREATE TABLE states(
 
 -- Inserting a custom row
 INSERT INTO states (name, capital ) VALUES
-( 'Abia ', 'Umuahia');
+( 'Abia', 'Umuahia');
 INSERT INTO states (name, capital ) VALUES
 ( 'Adamawa', 'Yola');
 INSERT INTO states (name, capital ) VALUES
@@ -48,7 +48,7 @@ INSERT INTO states (name, capital ) VALUES
 INSERT INTO states (name, capital ) VALUES
 ( 'Kano', 'Kano');
 INSERT INTO states (name, capital ) VALUES
-( 'Kastina', 'Kastina');
+( 'Katsina', 'Kastina');
 INSERT INTO states (name, capital ) VALUES
 ( 'Kebbi', 'Birnin Kebbi');
 INSERT INTO states (name, capital ) VALUES
@@ -58,7 +58,7 @@ INSERT INTO states (name, capital ) VALUES
 INSERT INTO states (name, capital ) VALUES
 ( 'Lagos', 'Ikeja');
 INSERT INTO states (name, capital ) VALUES
-( 'Nassarawa', 'Lafia');
+( 'Nasarawa', 'Lafia');
 INSERT INTO states (name, capital ) VALUES
 ( 'Niger', 'Minna');
 INSERT INTO states (name, capital ) VALUES
@@ -74,7 +74,7 @@ INSERT INTO states (name, capital ) VALUES
 INSERT INTO states (name, capital ) VALUES
 ( 'Rivers', 'Port Harcourt');
 INSERT INTO states (name, capital ) VALUES
-( 'sokoto', 'sokoto');
+( 'Sokoto', 'Sokoto');
 INSERT INTO states (name, capital ) VALUES
 ( 'Taraba', 'Jalingo');
 INSERT INTO states (name, capital ) VALUES
@@ -85,3 +85,6 @@ INSERT INTO states (name, capital ) VALUES
 ( 'FCT', 'Abuja');
 -- +goose Down
 DROP TABLE states;
+
+
+

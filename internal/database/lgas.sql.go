@@ -11,16 +11,74 @@ import (
 	"github.com/google/uuid"
 )
 
-const saveLga = `-- name: SaveLga :exec
+const addLga = `-- name: AddLga :one
 INSERT INTO lgas (name, state_id) VALUES ($1, $2)
+RETURNING id, name, state_id
 `
 
-type SaveLgaParams struct {
+type AddLgaParams struct {
 	Name    string
 	StateID uuid.UUID
 }
 
-func (q *Queries) SaveLga(ctx context.Context, arg SaveLgaParams) error {
-	_, err := q.db.ExecContext(ctx, saveLga, arg.Name, arg.StateID)
-	return err
+func (q *Queries) AddLga(ctx context.Context, arg AddLgaParams) (Lga, error) {
+	row := q.db.QueryRowContext(ctx, addLga, arg.Name, arg.StateID)
+	var i Lga
+	err := row.Scan(&i.ID, &i.Name, &i.StateID)
+	return i, err
+}
+
+const getLgas = `-- name: GetLgas :many
+SELECT id, name, state_id FROM lgas
+`
+
+func (q *Queries) GetLgas(ctx context.Context) ([]Lga, error) {
+	rows, err := q.db.QueryContext(ctx, getLgas)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Lga
+	for rows.Next() {
+		var i Lga
+		if err := rows.Scan(&i.ID, &i.Name, &i.StateID); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getStateLgas = `-- name: GetStateLgas :many
+SELECT id, name, state_id FROM lgas
+WHERE state_id = $1
+`
+
+func (q *Queries) GetStateLgas(ctx context.Context, stateID uuid.UUID) ([]Lga, error) {
+	rows, err := q.db.QueryContext(ctx, getStateLgas, stateID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Lga
+	for rows.Next() {
+		var i Lga
+		if err := rows.Scan(&i.ID, &i.Name, &i.StateID); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }

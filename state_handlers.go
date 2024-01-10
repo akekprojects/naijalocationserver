@@ -26,7 +26,7 @@ func (apiConfig *Config) getStatesAHandler(w http.ResponseWriter, r *http.Reques
 
 	if stateA == "" {
 		log.Println("empty state")
-		respondWithJson(w, 200, []State{})
+		respondWithError(w, 200, "empty data for the input state, make sure the state spelling is correct, or input the first letter to list all states with that letter")
 		return
 
 	}

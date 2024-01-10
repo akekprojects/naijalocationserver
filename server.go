@@ -24,9 +24,15 @@ func server(apiConfig *Config) {
 	router.Use(cors.Handler(corsOptions))
 	apiRoute.Get("/hello", helloReady)
 	apiRoute.Get("/error", errorReady)
+
+	//states handlers
 	apiRoute.Get("/states", apiConfig.getStatesHandler)
 	apiRoute.Get("/states/{state}", apiConfig.getStatesAHandler)
 	apiRoute.Get("/state/{state}", apiConfig.getStateHandler)
+
+	// lgas handlers
+	apiRoute.Get("/local-government-areas", apiConfig.getLgasHandler)
+	apiRoute.Get("/local-government-areas/{state}", apiConfig.getLgasAHandler)
 
 	router.Mount("/api", apiRoute)
 	srv := &http.Server{
