@@ -3,7 +3,7 @@
 
 This is the Repository for http://naijalocationserver.com/, an api endpoint that provides the necesary infomation about Nigeria locations, ranging from States, Capitals, Local Government Areas and more to come.
 
-# Motivation Behind NaijaLocationSever
+## Motivation Behind NaijaLocationSever
 The development of NaijaLocationSever is guided by four key principles:
 
 * Correctness: This project is personally managed by me, and information will be consistently updated to reflect the latest data.
