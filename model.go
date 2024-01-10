@@ -47,3 +47,26 @@ func databaseLgasToLgas(dbLgas []database.Lga) []Lga {
 	}
 	return lgas
 }
+
+// City
+
+type City struct {
+	ID         uuid.UUID `json:"id"`
+	Name       string    `json:"name"`
+	Population string    `json:"population"`
+}
+
+func databaseCityToCity(dbCity database.City) City {
+	return City{
+		ID:         dbCity.ID,
+		Name:       dbCity.Name,
+		Population: dbCity.Population,
+	}
+}
+func databaseCitiesToCities(dbCities []database.City) []City {
+	cities := []City{}
+	for _, dbCity := range dbCities {
+		cities = append(cities, databaseCityToCity(dbCity))
+	}
+	return cities
+}

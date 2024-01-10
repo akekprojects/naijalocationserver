@@ -8,6 +8,13 @@ import (
 	"github.com/google/uuid"
 )
 
+type City struct {
+	ID         uuid.UUID
+	Name       string
+	Population string
+	StateID    uuid.UUID
+}
+
 type Lga struct {
 	ID      uuid.UUID
 	Name    string

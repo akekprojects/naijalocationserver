@@ -34,6 +34,10 @@ func server(apiConfig *Config) {
 	apiRoute.Get("/local-government-areas", apiConfig.getLgasHandler)
 	apiRoute.Get("/local-government-areas/{state}", apiConfig.getLgasAHandler)
 
+	// cities handlers
+	apiRoute.Get("/cities", apiConfig.getCitiesHandler)
+	apiRoute.Get("/cities/{state}", apiConfig.getStateCitiesHandler)
+
 	router.Mount("/api", apiRoute)
 	srv := &http.Server{
 		Addr:              ":" + apiConfig.PORT,
