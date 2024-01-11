@@ -40,3 +40,14 @@ jobs:
         run: staticcheck ./...
       - name: Check for Formating issues
         run: test -z $(go fmt ./...)
+  actions_tests:
+    name: Actions Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Print true
+        run: echo "Hello World"
+      - name: Print directory
+        run:  pwd
+      - name: Wrong linux command
+        run: eeee
