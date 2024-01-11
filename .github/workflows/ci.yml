@@ -51,8 +51,7 @@ jobs:
         run: echo "Hello World"
       - name: Print directory
         run:  pwd
-      - name: Wrong linux command
-        run: eeee
+   
 
   run-binary-directly:
     name: Run Binary Directly
