@@ -64,7 +64,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.21.5'
-      - name: Set .env Port 
+      - name: set_env 
         run: echo "PORT=8080"  >> .env
       - name: Print environment variables
         run: echo "PORT=$PORT"
@@ -72,3 +72,7 @@ jobs:
         run: go build -o ./bin/naijalocationserver .
       - name: Run Binary
         run: ./bin/naijalocationserver
+        shell: bash
+        env:
+         PORT: ${{ steps.set_env.outputs.PORT }}
+        
