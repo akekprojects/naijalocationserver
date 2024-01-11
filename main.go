@@ -27,6 +27,7 @@ func main() {
 		log.Println("there is no port provided kindly provide a port.")
 		return
 	}
+	port = "8080"
 	dbURL := os.Getenv("DB_URL")
 	if dbURL == "" {
 		log.Println("empty dbURL")
