@@ -65,7 +65,7 @@ jobs:
         with:
           go-version: '1.21.5'
       - name: Send .env Port
-        run: echo "PORT=8080"  >> .env && echo "DB_URL = "postgresql://postgres:akek@localhost:5432/naijalocation?sslmode=disable""  >> .env 
+        run: echo "PORT=8080"  
       - name: Print environment variables
         run: echo "PORT=$PORT"
       - name: Build Binary
