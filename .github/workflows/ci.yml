@@ -42,6 +42,8 @@ jobs:
         run: test -z $(go fmt ./...)
   actions_tests:
     name: Actions Tests
+    # this need is just to test depending github actions
+    needs: [tests]
     runs-on: ubuntu-latest
     
     steps:
