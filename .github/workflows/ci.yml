@@ -64,6 +64,8 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.21.5'
+      - name: Send .env Port
+        run: echo "PORT=8080" >> .env
       - name: Build Binary
         run: go build -o ./bin/naijalocationserver .
       - name: Run Binary
