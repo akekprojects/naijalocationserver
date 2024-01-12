@@ -1,12 +1,12 @@
 name: Test Jobs
 on:
     push:
-      branches: dev
+      branches: [dev]
 
 jobs:
     tests_job1:
         name: Test Job1
-        runs-on: ubuntu-latest@v4
+        runs-on: ubuntu-latest
         steps:
             - name: Echo Environment Variables
               run: |
