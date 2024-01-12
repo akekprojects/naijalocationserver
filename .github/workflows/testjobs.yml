@@ -1,6 +1,5 @@
 name: Test Jobs
 on:
-    push:
     issues:
       types: [opened]
 
