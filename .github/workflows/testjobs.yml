@@ -11,7 +11,7 @@ jobs:
             - name: Echo Environment Variables
               run: |
                  pwd
-                 echo $GITHUB_SSH
+                 echo $GITHUB_SHA
                  echo $GITHUB_REF
                  echo $GITHUB_WORKSPACE
 
