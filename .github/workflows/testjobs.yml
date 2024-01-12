@@ -1,9 +1,8 @@
 name: Test Jobs
 on:
     push:
-      branches: [dev]
     issues:
-      types: [opened, closed]
+      types: [opened]
 
 jobs:
     tests_job1:
