@@ -1,9 +1,6 @@
 name: Test Jobs
 on:
     issues:
-        types: [opened, deleted]
-
-    
     push:
         branches: [dev]
     
