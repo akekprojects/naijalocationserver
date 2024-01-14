@@ -19,7 +19,8 @@ jobs:
           - name : Build The Server Binary
             run: |
              pwd
-             ./secrets/buildprod.sh
+             ls -la
+            #  ./secrets/buildprod.sh
              
           - name: Run built Binary
             run: ./bin/naijalocationserver
