@@ -20,7 +20,7 @@ jobs:
             run: |
              pwd
              ls -la
-             chmod +x ./secrets/buildprod.sh 
+             chmod +x secrets/buildprod.sh 
              
           - name: Run built Binary
             run: ./bin/naijalocationserver
