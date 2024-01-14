@@ -20,7 +20,7 @@ jobs:
             run: |
              pwd
              ls -la
-             chmod +x scripts/buildprod.sh 
+             scripts/buildprod.sh 
              ls -la
              
         #   - name: Run built Binary
