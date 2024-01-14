@@ -23,5 +23,5 @@ jobs:
              scripts/buildprod.sh 
              ls -la
              
-        #   - name: Run built Binary
-        #     run: bin/naijalocationserver
+          - name: Run built Binary
+            run: bin/naijalocationserver
