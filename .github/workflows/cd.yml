@@ -18,7 +18,8 @@ jobs:
             uses: actions/checkout@v4
           - name : Build The Server Binary
             run: |
-             secrets/buildprod.sh
              pwd
+             ./secrets/buildprod.sh
+             
           - name: Run built Binary
             run: ./bin/naijalocationserver
