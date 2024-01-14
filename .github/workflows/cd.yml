@@ -22,8 +22,10 @@ jobs:
              ls -la
              touch .env
              echo "PORT=${{vars.PORT}}" >> .env
+             echo ${{vars.PORT}}
              scripts/buildprod.sh 
              ls -la
+             cat .env
              
           - name: Run built Binary
             run: bin/naijalocationserver
