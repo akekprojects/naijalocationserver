@@ -1,5 +1,4 @@
 .env
-naijalocationserver
 ng.json
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
