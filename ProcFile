@@ -1,1 +1,1 @@
-web: ./naijalocationserver -p $PORT
+web: go build -o naijalocationserver && ./naijalocationserver -- -p $PORT
