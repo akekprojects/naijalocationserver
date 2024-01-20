@@ -39,6 +39,7 @@ func server(apiConfig *Config) {
 	apiRoute.Get("/cities/{state}", apiConfig.getStateCitiesHandler)
 
 	router.Mount("/api", apiRoute)
+	router.Get("/", renderHome)
 	srv := &http.Server{
 		Addr:              ":" + apiConfig.PORT,
 		Handler:           router,
