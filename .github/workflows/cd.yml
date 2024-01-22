@@ -58,6 +58,7 @@ jobs:
         - run: |
                  mkdir $HOME/secrets
                  gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
-                 chmod 400 "$HOME/secrets/serverpem.pem"
+                 chmod 400 "secrets/serverpem.pem"
         - run: |
-           ssh -tt -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
+           cat secrets/serverpem.pem
+           #ssh -tt -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
