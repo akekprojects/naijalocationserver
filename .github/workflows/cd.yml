@@ -8,48 +8,49 @@ env:
 
 
 jobs:
-    build:
-        name: Building and updating docker images.
-        permissions:
-          id-token: write
-          contents: read
-        runs-on: ubuntu-latest
-        steps:
-          - name: Set-Up Go
-            uses: actions/setup-go@v4
-            with:
-              go-version: '1.21.5'
-          - name: Checkout Codes
-            uses: actions/checkout@v4
-          - name : Build The Server Binary 
-            run: |
-             pwd
-             scripts/buildprod.sh 
-             docker --version
-          - run: |
-             mkdir $HOME/secrets
-             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
-             chmod 400 "$HOME/secrets/serverpem.pem"
-          - name: SET version to gitenv
-            run: echo "deployversion=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          - name: Build New Docker Image
-            run : |
-             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver:'${{ env.deployversion}}'
-             docker image ls 
-          - name: Log in To docker 
-            uses: docker/login-action@v3
-            with:
-              username: ${{ secrets.DOCKERHUB_USERNAME }}
-              password: ${{ secrets.DOCKERHUB_TOKEN }}
-          - name: Push Docker images
-            run: |
-             docker push  muhammadolammi/naijalocationserver --all-tags
+   #comment job till after test
+    # build:
+    #     name: Building and updating docker images.
+    #     permissions:
+    #       id-token: write
+    #       contents: read
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #       - name: Set-Up Go
+    #         uses: actions/setup-go@v4
+    #         with:
+    #           go-version: '1.21.5'
+    #       - name: Checkout Codes
+    #         uses: actions/checkout@v4
+    #       - name : Build The Server Binary 
+    #         run: |
+    #          pwd
+    #          scripts/buildprod.sh 
+    #          docker --version
+    #       - run: |
+    #          mkdir $HOME/secrets
+    #          gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
+    #          chmod 400 "$HOME/secrets/serverpem.pem"
+    #       - name: SET version to gitenv
+    #         run: echo "deployversion=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+    #       - name: Build New Docker Image
+    #         run : |
+    #          docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver:'${{ env.deployversion}}'
+    #          docker image ls 
+    #       - name: Log in To docker 
+    #         uses: docker/login-action@v3
+    #         with:
+    #           username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #           password: ${{ secrets.DOCKERHUB_TOKEN }}
+    #       - name: Push Docker images
+    #         run: |
+    #          docker push  muhammadolammi/naijalocationserver --all-tags
           
 
     deploy:
-      needs: build
+      #needs: build
       name: Deploying to ec2
       runs-on: ubuntu-latest
       steps: 
         - run: |
-           ssh -i "$HOME/secrets/serverpem.pem" ${{secrets.EC2_SERVER}}
+           ssh -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
