@@ -62,4 +62,4 @@ jobs:
            
         - run: |
            
-           ssh -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
+           ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
