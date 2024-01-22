@@ -18,7 +18,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     </head>
 
     <p>
-        This site is still under construction and uis being worked on.
+        This site is still under construction and is being worked on.
     </p>
 
     <p >
