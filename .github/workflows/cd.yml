@@ -24,7 +24,7 @@ jobs:
              scripts/buildprod.sh 
              docker --version
           - run: |
-             gpg --decrypt --passphrase=${{secrets.GPG_KEY}} --output serverpem.pem serverpem.pem.gpg
+             gpg --decrypt --passphrase='${{secrets.GPG_KEY}}' --output serverpem.pem serverpem.pem.gpg
           - name: Build New Docker Image
             run : |
              docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
