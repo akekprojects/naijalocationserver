@@ -56,9 +56,10 @@ jobs:
         - name: Checkout Codes
           uses: actions/checkout@v4
         - run: |
+            mkdir secrets
             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
-            chmod 400 "/secrets/serverpem.pem"
-            cat /secrets/serverpem.pem
+            chmod 400 "secrets/serverpem.pem"
+            cat secrets/serverpem.pem
         - run: |
            
            #ssh -tt -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
