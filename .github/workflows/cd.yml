@@ -3,6 +3,9 @@ on:
   push:
     branches: [main]
 
+env:
+  gpgkey: ${{secrets.GPG_KEY}}
+
 
 jobs:
     build:
@@ -23,8 +26,10 @@ jobs:
              pwd
              scripts/buildprod.sh 
              docker --version
-          - run: |
-             gpg --decrypt --passphrase='${{secrets.GPG_KEY}}' --output serverpem.pem serverpem.pem.gpg
+          - 
+            run: |
+             mkdir $HOME/secrets
+             gpg --quite --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
           - name: Build New Docker Image
             run : |
              docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
@@ -38,7 +43,7 @@ jobs:
             run: docker login -u AWS -p $(aws ecr get-login-password  --region us-east-1) 042620621262.dkr.ecr.us-east-1.amazonaws.com
           - name: Push the docker images to ECR
             run: |
-             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 
+             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest
              docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
 
     deploy:
