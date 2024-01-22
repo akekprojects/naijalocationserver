@@ -20,14 +20,9 @@ jobs:
              pwd
              scripts/buildprod.sh 
              docker --version
-          - name : Configure aws cli
-            run : aws configure
-            env:
-              AWS_ACCESS_KEY_ID : ${{ secrets. AWS_ACESS_ID}}
-              AWS_SECRET_ACCESS_KEY : ${{ secrets. AWS_ACCESS_KEY}}
-              AWS_DEFAULT_REGION: 'us-east-1'
           - name: Build New Docker Image
             run : |
              scripts/dockerbuild.sh 
+             docker image ls 
              
            
