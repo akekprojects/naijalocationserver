@@ -22,7 +22,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     </p>
 
     <p >
-        To read about how to get started check github README <a>href="https://github.com/akekprojects/naijalocationserver/blob/main/README.md" here</a>
+        To read about how to get started check github README <a href="https://github.com/akekprojects/naijalocationserver/blob/main/README.md"> here</a>
     </p>
 </html>
 	`
