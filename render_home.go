@@ -11,7 +11,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     <head>
         <h1>
             Hi this is Naija Location server endpoint.
-            
+            testing
         </h1>
     </head>
 </html>`

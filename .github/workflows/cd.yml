@@ -60,6 +60,14 @@ jobs:
             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
             chmod 400 "secrets/serverpem.pem"
            
-        - run: |
-           
-           ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
+        - name: Pull docker image
+          run: |
+           ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker pull muhammadolammi/naijalocationserver:latest'
+        - name: Stop docker container 
+          run: |
+            ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker stop naijalocationserver || true'
+            ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker rm naijalocationserver || true'
+        - name: Pull docker image
+          run: |
+             ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker run --name naijalocationserver -d -p 80:80 -e PORT=80 -e DB_URL="postgresql://postgres:090@Billahlillah@23.22.201.114:5432/naijalocation" muhammadolammi/naijalocationserver:latest'
+            
