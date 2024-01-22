@@ -1,13 +1,13 @@
 name: development cd
-on: 
-    push:
-        branches: [main] 
+on:
+  push:
+    branches: [main]
+
 
 jobs:
-    run_with_git:
+    deploy:
         name: Run Server on Git
         runs-on: ubuntu-latest
-        environment : "development"
         steps:
           - name: Set-Up Go
             uses: actions/setup-go@v4
@@ -15,10 +15,26 @@ jobs:
               go-version: '1.21.5'
           - name: Checkout Codes
             uses: actions/checkout@v4
-          - name : Build The Server Binary and set .env values
+          - name : Build The Server Binary
             run: |
              pwd
-             ls -la
              scripts/buildprod.sh 
              docker --version
-             ls -la
+          - name : Install aws cli 
+            run : |
+             sudo apt update
+             sudo apt install unzip
+             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+             unzip awscliv2.zip
+             sudo ./aws/install
+          - name : Configure aws cli
+            run : aws configure
+            env:
+              AWS_ACCESS_KEY_ID : ${{ secrets. AWS_ACESS_ID}}
+              AWS_SECRET_ACCESS_KEY : ${{ secrets. AWS_ACCESS_KEY}}
+              AWS_DEFAULT_REGION: 'us-east-1'
+          - name: Build New Docker Image
+            run : |
+             scripts/dockerbuild.sh 
+             
+           
