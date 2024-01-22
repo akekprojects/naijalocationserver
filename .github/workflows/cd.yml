@@ -28,9 +28,9 @@ jobs:
     #          scripts/buildprod.sh 
     #          docker --version
     #       - run: |
-    #          mkdir $HOME/secrets
-    #          gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
-    #          chmod 400 "$HOME/secrets/serverpem.pem"
+    #          mkdir secrets
+    #          gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
+    #          chmod 400 "secrets/serverpem.pem"
     #       - name: SET version to gitenv
     #         run: echo "deployversion=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     #       - name: Build New Docker Image
@@ -59,7 +59,7 @@ jobs:
             mkdir secrets
             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
             chmod 400 "secrets/serverpem.pem"
-            cat secrets/serverpem.pem
+           
         - run: |
            
-           #ssh -tt -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
+           ssh -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
