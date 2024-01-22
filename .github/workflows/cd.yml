@@ -5,9 +5,8 @@ on:
 
 
 jobs:
-    deploy:
-    
-        name: Deploying
+    build:
+        name: Building and updating docker images.
         permissions:
           id-token: write
           contents: read
@@ -19,11 +18,13 @@ jobs:
               go-version: '1.21.5'
           - name: Checkout Codes
             uses: actions/checkout@v4
-          - name : Build The Server Binary
+          - name : Build The Server Binary 
             run: |
              pwd
              scripts/buildprod.sh 
              docker --version
+          - run: |
+             gpg --decrypt --passphrase=${{secrets.GPG_KEY}} --output serverpem.pem serverpem.pem.gpg
           - name: Build New Docker Image
             run : |
              docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
@@ -37,4 +38,13 @@ jobs:
             run: docker login -u AWS -p $(aws ecr get-login-password  --region us-east-1) 042620621262.dkr.ecr.us-east-1.amazonaws.com
           - name: Push the docker images to ECR
             run: |
-             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 
+             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+
+    deploy:
+      needs: build
+      name: Deploying to ec2
+      runs-on: ubuntu-latest
+      steps: 
+        - run: |
+        #  ssh -i "/home/muhammad/awsfolder/naijalocationserver.pem" ubuntu@ec2-23-22-201-114.compute-1.amazonaws.com
