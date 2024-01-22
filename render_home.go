@@ -7,14 +7,25 @@ import (
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	htmlString := `<html>
+	htmlString := `
+	<html>
     <head>
         <h1>
             Hi this is Naija Location server endpoint.
-            testing
+          
         </h1>
+        
     </head>
-</html>`
+
+    <p>
+        This site is still under construction and uis being worked on.
+    </p>
+
+    <p >
+        To read about how to get started check github README <a>href="https://github.com/akekprojects/naijalocationserver/blob/main/README.md" here</a>
+    </p>
+</html>
+	`
 	t, err := template.New("index").Parse(htmlString)
 	if err != nil {
 		respondWithError(w, 500, fmt.Sprintf("error passing html file err : %v", err))
