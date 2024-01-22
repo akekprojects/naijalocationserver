@@ -33,3 +33,8 @@ jobs:
             with:
               role-to-assume: arn:aws:iam::042620621262:role/githubrole
               aws-region: us-east-1
+          - name : Docker Login
+            run: docker login -u AWS -p $(aws ecr get-login-password  --region us-east-1) 042620621262.dkr.ecr.us-east-1.amazonaws.com
+          - name: Push the docker images to ECR
+            run: |
+             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
