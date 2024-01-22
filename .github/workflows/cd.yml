@@ -8,7 +8,7 @@ env:
 
 
 jobs:
-  build:
+    build:
         name: Building and updating docker images.
         permissions:
           id-token: write
@@ -26,10 +26,6 @@ jobs:
              pwd
              scripts/buildprod.sh 
              docker --version
-          - run: |
-             mkdir secrets
-             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
-             chmod 400 "secrets/serverpem.pem"
           - name: SET version to gitenv
             run: echo "deployversion=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           - name: Build New Docker Image
@@ -44,11 +40,21 @@ jobs:
           - name: Push Docker images
             run: |
              docker push  muhammadolammi/naijalocationserver --all-tags
-  deploy:
-      needs: build
+          
+
+    deploy:
+      needs: build 
       name: Deploying to ec2
       runs-on: ubuntu-latest
-      steps:   
+      steps: 
+        #remember to remove checkout and secret decrypt duplicates
+        - name: Checkout Codes
+          uses: actions/checkout@v4
+        - run: |
+            mkdir secrets
+            gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
+            chmod 400 "secrets/serverpem.pem"
+           
         - name: Pull docker image
           run: |
            ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker pull muhammadolammi/naijalocationserver:latest'
@@ -58,5 +64,5 @@ jobs:
             ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker rm naijalocationserver || true'
         - name: Run New Container
           run: |
-             ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker run --name naijalocationserver -d -p 80:80 -e PORT=80 -e DB_URL="postgresql://postgres:090@Billahlillah@23.22.201.114:5432/naijalocation" muhammadolammi/naijalocationserver:latest'
+             ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker run --name naijalocationserver -d -p 80:80 -e PORT=80 -e DB_URL='${{secrets.DB_URL}}' muhammadolammi/naijalocationserver:latest'
             
