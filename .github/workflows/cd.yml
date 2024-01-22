@@ -33,20 +33,17 @@ jobs:
              chmod 400 "$HOME/secrets/serverpem.pem"
           - name: Build New Docker Image
             run : |
-             docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 
-             #-t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver/naijalocationserver:${{github.sha}}
              docker image ls 
-          - name: Configure aws
-            uses: aws-actions/configure-aws-credentials@v4
+          - name: Log in To docker 
+            uses: docker/login-action@v3
             with:
-              role-to-assume: arn:aws:iam::042620621262:role/githubrole
-              aws-region: us-east-1
-          - name : Docker Login
-            run: docker login -u AWS -p $(aws ecr get-login-password  --region us-east-1) 042620621262.dkr.ecr.us-east-1.amazonaws.com
-          - name: Push the docker images to ECR
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+          - name: Push Docker images
             run: |
-             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest
-             #docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+             docker push -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver/naijalocationserver:${{github.sha}}
+          
 
     deploy:
       needs: build
