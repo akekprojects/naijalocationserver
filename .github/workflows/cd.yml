@@ -30,12 +30,11 @@ jobs:
              mkdir $HOME/secrets
              gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
              chmod 400 "$HOME/secrets/serverpem.pem"
-          - name: Set version
-            id: versionstep
-            run: echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          - name: SET version to gitenv
+            run: echo "deployversion=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           - name: Build New Docker Image
             run : |
-             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver:"${{steps.versionstep.version}}""
+             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver:${{ github.deployversion}}
              docker image ls 
           - name: Log in To docker 
             uses: docker/login-action@v3
