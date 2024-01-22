@@ -29,7 +29,7 @@ jobs:
           - 
             run: |
              mkdir $HOME/secrets
-             gpg --quite --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
+             gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
           - name: Build New Docker Image
             run : |
              docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
