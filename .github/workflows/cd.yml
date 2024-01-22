@@ -26,14 +26,16 @@ jobs:
              pwd
              scripts/buildprod.sh 
              docker --version
-          - 
-            run: |
+          - run: |
              mkdir $HOME/secrets
              gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
              chmod 400 "$HOME/secrets/serverpem.pem"
+          - name: Set version
+            id: versionstep
+            run: echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           - name: Build New Docker Image
             run : |
-             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver/naijalocationserver:${{github.sha}}
+             docker build . -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver/naijalocationserver:${{steps.versionstep.version}}
              docker image ls 
           - name: Log in To docker 
             uses: docker/login-action@v3
@@ -42,7 +44,7 @@ jobs:
               password: ${{ secrets.DOCKERHUB_TOKEN }}
           - name: Push Docker images
             run: |
-             docker push -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver/naijalocationserver:${{github.sha}}
+             docker push  muhammadolammi/naijalocationserver:latest  muhammadolammi/naijalocationserver/naijalocationserver:${{steps.versionstep.version}}
           
 
     deploy:
