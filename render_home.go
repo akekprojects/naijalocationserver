@@ -17,13 +17,14 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
         
     </head>
 
-    <p>
-        This site is still under construction and is being worked on.
-    </p>
 
     <p >
-        To read about how to get started check github README <a href="https://github.com/akekprojects/naijalocationserver/blob/main/README.md"> here</a>
+        To read about active endpoints and how to get started check github README <a href="https://github.com/akekprojects/naijalocationserver/blob/main/README.md"> here</a>
     </p>
+
+	<p>
+	Note: This site is still under construction and is being worked on.
+</p>
 </html>
 	`
 	t, err := template.New("index").Parse(htmlString)
