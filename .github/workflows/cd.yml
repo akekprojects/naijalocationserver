@@ -30,9 +30,11 @@ jobs:
             run: |
              mkdir $HOME/secrets
              gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
+             chmod 400 "$HOME/secrets/serverpem.pem"
           - name: Build New Docker Image
             run : |
-             docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+             docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest 
+             #-t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
              docker image ls 
           - name: Configure aws
             uses: aws-actions/configure-aws-credentials@v4
@@ -44,7 +46,7 @@ jobs:
           - name: Push the docker images to ECR
             run: |
              docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest
-             docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
+             #docker push 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:${{github.sha}}
 
     deploy:
       needs: build
@@ -52,4 +54,4 @@ jobs:
       runs-on: ubuntu-latest
       steps: 
         - run: |
-        #  ssh -i "/home/muhammad/awsfolder/naijalocationserver.pem" ubuntu@ec2-23-22-201-114.compute-1.amazonaws.com
+           ssh -i "$HOME/secrets/serverpem.pem" ${{secrets.EC2_SERVER}}
