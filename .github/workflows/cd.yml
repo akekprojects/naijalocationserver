@@ -48,10 +48,11 @@ jobs:
           
 
     deploy:
-      #needs: build
+      #needs: build remember to uncomment
       name: Deploying to ec2
       runs-on: ubuntu-latest
       steps: 
+        #remember to remove checkout and secret decrypt duplicates
         - name: Checkout Codes
           uses: actions/checkout@v4
         - run: |
@@ -59,4 +60,4 @@ jobs:
                  gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output $HOME/secrets/serverpem.pem serverpem.pem.gpg
                  chmod 400 "$HOME/secrets/serverpem.pem"
         - run: |
-           ssh -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
+           ssh -tt -i "$HOME/secrets/serverpem.pem" '${{secrets.EC2_SERVER}}'
