@@ -30,7 +30,7 @@ func main() {
 	dbURL := os.Getenv("DB_URL")
 	if dbURL == "" {
 		log.Println("empty dbURL")
-		return
+
 	}
 
 	db, err := sql.Open("postgres", dbURL)

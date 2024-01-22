@@ -1,8 +1,7 @@
 name: development cd
 on: 
     push:
-        # remember to remove dev here 
-        branches: [main, dev] 
+        branches: [main] 
 
 jobs:
     run_with_git:
@@ -20,12 +19,6 @@ jobs:
             run: |
              pwd
              ls -la
-             touch .env
-             echo "PORT=${{vars.PORT}}" >> .env
-             echo ${{vars.PORT}}
              scripts/buildprod.sh 
+             docker --version
              ls -la
-             cat .env
-             
-          - name: Run built Binary
-            run: bin/naijalocationserver

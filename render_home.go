@@ -2,12 +2,20 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
-	"text/template"
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, err := template.ParseFiles(tmpl)
+	htmlString := `<html>
+    <head>
+        <h1>
+            Hi this is Naija Location server endpoint.
+            
+        </h1>
+    </head>
+</html>`
+	t, err := template.New("index").Parse(htmlString)
 	if err != nil {
 		respondWithError(w, 500, fmt.Sprintf("error passing html file err : %v", err))
 		return
