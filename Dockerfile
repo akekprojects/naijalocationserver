@@ -5,7 +5,7 @@
 FROM debian:stable-slim
 
 # COPY source destination
-COPY naijalocationserver /bin/naijalocationserver
+COPY bin/naijalocationserver /bin/naijalocationserver
 
 
 CMD ["/bin/naijalocationserver"]

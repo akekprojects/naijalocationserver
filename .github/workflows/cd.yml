@@ -22,7 +22,7 @@ jobs:
              docker --version
           - name: Build New Docker Image
             run : |
-             docker build . -t 042620621262.dkr.ecr.us-east-1.amazonaws.com/naijalocationserver:latest -t muhammadolammi/naijalocationserver:latest -t muhammadolammi/naijalocationserver:${{github.sha}}
+             scripts/dockerbuild.sh 
              docker image ls 
              
            
