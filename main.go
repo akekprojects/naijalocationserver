@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/muhammadolammi/naijalocationserver/internal/database"
@@ -27,11 +26,13 @@ func main() {
 		log.Println("there is no port provided kindly provide a port.")
 		return
 	}
+
 	dbURL := os.Getenv("DB_URL")
 	if dbURL == "" {
 		log.Println("empty dbURL")
 		return
 	}
+
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		fmt.Println(err)

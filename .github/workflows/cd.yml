@@ -1,0 +1,31 @@
+name: development cd
+on: 
+    push:
+        # remember to remove dev here 
+        branches: [main, dev] 
+
+jobs:
+    run_with_git:
+        name: Run Server on Git
+        runs-on: ubuntu-latest
+        environment : "development"
+        steps:
+          - name: Set-Up Go
+            uses: actions/setup-go@v4
+            with:
+              go-version: '1.21.5'
+          - name: Checkout Codes
+            uses: actions/checkout@v4
+          - name : Build The Server Binary and set .env values
+            run: |
+             pwd
+             ls -la
+             touch .env
+             echo "PORT=${{vars.PORT}}" >> .env
+             echo ${{vars.PORT}}
+             scripts/buildprod.sh 
+             ls -la
+             cat .env
+             
+          - name: Run built Binary
+            run: bin/naijalocationserver

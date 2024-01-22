@@ -23,7 +23,7 @@ jobs:
       - name: Run all Tests
         run: go test ./...
 
-  syle:
+  style:
     name: Style
     runs-on: ubuntu-latest
     
@@ -40,3 +40,11 @@ jobs:
         run: staticcheck ./...
       - name: Check for Formating issues
         run: test -z $(go fmt ./...)
+
+  
+
+   
+
+
+        
+        
