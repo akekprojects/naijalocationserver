@@ -51,9 +51,8 @@ jobs:
         - name: Checkout Codes
           uses: actions/checkout@v4
         - run: |
-            mkdir secrets
-            gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/naijalocationserverpem.pem naijalocationserverpem.pem.gpg
-            chmod 400 "secrets/serverpem.pem"
+            gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/naijalocationserverpem.pem secrets/naijalocationserverpem.pem.gpg
+            chmod 400 "secrets/naijalocationserverpem.pem"
            
         - name: Pull docker image
           run: |
