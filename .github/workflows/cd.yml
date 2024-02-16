@@ -51,17 +51,18 @@ jobs:
         - name: Checkout Codes
           uses: actions/checkout@v4
         - run: |
-            gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/naijalocationserverpem.pem secrets/naijalocationserverpem.pem.gpg
-            chmod 400 "secrets/naijalocationserverpem.pem"
+            mkdir secrets
+            gpg --quiet --batch --yes --decrypt --passphrase="$gpgkey" --output secrets/serverpem.pem serverpem.pem.gpg
+            chmod 400 "secrets/serverpem.pem"
            
         - name: Pull docker image
           run: |
-           ssh -o StrictHostKeyChecking=No -tt -i "secrets/naijalocationserverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker pull muhammadolammi/naijalocationserver:latest'
+           ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker pull muhammadolammi/naijalocationserver:latest'
         - name: Stop docker container 
           run: |
-            ssh -o StrictHostKeyChecking=No -tt -i "secrets/naijalocationserverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker stop naijalocationserver || true'
-            ssh -o StrictHostKeyChecking=No -tt -i "secrets/naijalocationserverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker rm naijalocationserver || true'
+            ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker stop naijalocationserver || true'
+            ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker rm naijalocationserver || true'
         - name: Run New Container
           run: |
-             ssh -o StrictHostKeyChecking=No -tt -i "secrets/naijalocationserverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker run --name naijalocationserver -d -p 80:80 -e PORT=80 -e DB_URL='${{secrets.DB_URL}}' muhammadolammi/naijalocationserver:latest'
+             ssh -o StrictHostKeyChecking=No -tt -i "secrets/serverpem.pem" '${{secrets.EC2_SERVER}}' 'sudo docker run --name naijalocationserver -d -p 80:80 -e PORT=80 -e DB_URL='${{secrets.DB_URL}}' muhammadolammi/naijalocationserver:latest'
             
