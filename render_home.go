@@ -24,7 +24,6 @@ func renderTemplate(w http.ResponseWriter, data interface{}) {
 
 	<p>
 	Note: This site is still under construction and is being worked on.
-	test
 </p>
 </html>
 	`
