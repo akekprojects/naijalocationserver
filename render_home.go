@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+func renderTemplate(w http.ResponseWriter, data interface{}) {
 	htmlString := `
 	<html>
     <head>
@@ -41,5 +41,5 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 }
 
 func renderHome(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "index.html", "")
+	renderTemplate(w, "")
 }
